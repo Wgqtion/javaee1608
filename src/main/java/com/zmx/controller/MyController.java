@@ -28,6 +28,9 @@ public class MyController implements Controller {
         request.setAttribute("lave", "吴广庆");
         modelAndView.addObject("sexes", "女");
         modelAndView.setViewName("index");
+        
+        
+        
 
         return modelAndView;
     }

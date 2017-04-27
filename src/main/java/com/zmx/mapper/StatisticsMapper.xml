@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zmx.mapper.StatisticsMapper">
+  <resultMap id="BaseResultMap" type="com.zmx.entity.Statistics">
+    <id column="NEWS_ID" jdbcType="INTEGER" property="newsId" />
+    <id column="AN_ID" jdbcType="INTEGER" property="anId" />
+    <result column="TIME" jdbcType="DATE" property="time" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    NEWS_ID, AN_ID, TIME
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="com.zmx.entity.StatisticsKey" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from statistics
+    where NEWS_ID = #{newsId,jdbcType=INTEGER}
+      and AN_ID = #{anId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.zmx.entity.StatisticsKey">
+    delete from statistics
+    where NEWS_ID = #{newsId,jdbcType=INTEGER}
+      and AN_ID = #{anId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.zmx.entity.Statistics">
+    insert into statistics (NEWS_ID, AN_ID, TIME
+      )
+    values (#{newsId,jdbcType=INTEGER}, #{anId,jdbcType=INTEGER}, #{time,jdbcType=DATE}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.zmx.entity.Statistics">
+    insert into statistics
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="newsId != null">
+        NEWS_ID,
+      </if>
+      <if test="anId != null">
+        AN_ID,
+      </if>
+      <if test="time != null">
+        TIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="newsId != null">
+        #{newsId,jdbcType=INTEGER},
+      </if>
+      <if test="anId != null">
+        #{anId,jdbcType=INTEGER},
+      </if>
+      <if test="time != null">
+        #{time,jdbcType=DATE},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zmx.entity.Statistics">
+    update statistics
+    <set>
+      <if test="time != null">
+        TIME = #{time,jdbcType=DATE},
+      </if>
+    </set>
+    where NEWS_ID = #{newsId,jdbcType=INTEGER}
+      and AN_ID = #{anId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zmx.entity.Statistics">
+    update statistics
+    set TIME = #{time,jdbcType=DATE}
+    where NEWS_ID = #{newsId,jdbcType=INTEGER}
+      and AN_ID = #{anId,jdbcType=INTEGER}
+  </update>
+</mapper>

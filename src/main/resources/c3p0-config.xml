@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<c3p0-config>
+    <default-config>
+        <property name="driverClass">com.mysql.jdbc.Driver</property>
+        <property name="jdbcUrl">jdbc:mysql:///sununity?unicode=true&amp;characterEncoding=utf-8</property>
+        <property name="user">root</property>
+        <property name="password">123</property>
+        <!-- 等待连接的超时时间，默认为0，代表无限等待，单位是毫秒 -->
+        <property name="checkoutTimeout">30000</property>
+        <!-- 检查空闲连接  默认为0 代表不检查 -->
+        <property name="idleConnectionTestPeriod">30</property>
+        <!-- 初始化连接 -->
+        <property name="initialPoolSize">10</property>
+        <!-- 最大空闲时间，超过这个时间的连接将被丢弃，默认为0，代表永远不关闭 -->
+        <property name="maxIdleTime">50</property>
+        <!-- 最大连接数 -->
+        <property name="maxPoolSize">100</property>
+        <!-- 最小连接数 -->
+        <property name="minPoolSize">10</property>
+        <!-- preparedStatement的缓存大小 -->
+        <property name="maxStatements">200</property>
+        <!--当连接池中的连接耗尽的时候c3p0一次同时获取的连接数。默认值: 3 -->
+        <property name="AcquireIncrement">5</property>
+    </default-config>
+
+</c3p0-config>
+

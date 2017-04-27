@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zmx.mapper.NewsMapper">
+    <resultMap id="BaseResultMap" type="com.zmx.entity.News">
+        <id column="NEWS_ID" jdbcType="INTEGER" property="newsId" />
+        <result column="TITLE_NAME" jdbcType="VARCHAR" property="titleName" />
+        <result column="AN_ID" jdbcType="INTEGER" property="anId" />
+        <result column="TOP" jdbcType="INTEGER" property="top" />
+        <result column="TREAD" jdbcType="INTEGER" property="tread" />
+        <result column="NTIME" jdbcType="TIMESTAMP" property="time" />
+    </resultMap>
+    <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.zmx.entity.News">
+        <result column="BODY_TEXT" jdbcType="LONGVARCHAR" property="bodyText" />
+        <result column="IMAGES" jdbcType="LONGVARCHAR" property="images" />
+    </resultMap>
+    <sql id="Base_Column_List">
+        NEWS_ID, TITLE_NAME, AN_ID, TOP, TREAD, NTIME
+    </sql>
+    <sql id="Blob_Column_List">
+        BODY_TEXT, IMAGES
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
+        select
+        <include refid="Base_Column_List" />
+        ,
+        <include refid="Blob_Column_List" />
+        from news
+        where NEWS_ID = #{newsId,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        delete from news
+        where NEWS_ID = #{newsId,jdbcType=INTEGER}
+    </delete>
+    <insert id="insert" parameterType="com.zmx.entity.News">
+        insert into news (NEWS_ID, TITLE_NAME, AN_ID,
+        TOP, TREAD, NTIME, IMAGES,
+        BODY_TEXT)
+        values (#{newsId,jdbcType=INTEGER}, #{titleName,jdbcType=VARCHAR}, #{anId,jdbcType=INTEGER},
+        #{top,jdbcType=INTEGER}, #{tread,jdbcType=INTEGER}, #{time,jdbcType=TIMESTAMP}, #{images,jdbcType=LONGVARCHAR},
+        #{bodyText,jdbcType=LONGVARCHAR})
+    </insert>
+    <insert id="insertSelective" parameterType="com.zmx.entity.News">
+        insert into news
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="newsId != null">
+                NEWS_ID,
+            </if>
+            <if test="titleName != null">
+                TITLE_NAME,
+            </if>
+            <if test="anId != null">
+                AN_ID,
+            </if>
+            <if test="top != null">
+                TOP,
+            </if>
+            <if test="tread != null">
+                TREAD,
+            </if>
+            <if test="time != null">
+                NTIME,
+            </if>
+            <if test="images != null">
+                IMAGES,
+            </if>
+            <if test="bodyText != null">
+                BODY_TEXT,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="newsId != null">
+                #{newsId,jdbcType=INTEGER},
+            </if>
+            <if test="titleName != null">
+                #{titleName,jdbcType=VARCHAR},
+            </if>
+            <if test="anId != null">
+                #{anId,jdbcType=INTEGER},
+            </if>
+            <if test="top != null">
+                #{top,jdbcType=INTEGER},
+            </if>
+            <if test="tread != null">
+                #{tread,jdbcType=INTEGER},
+            </if>
+            <if test="time != null">
+                #{time,jdbcType=TIMESTAMP},
+            </if>
+            <if test="images != null">
+                #{images,jdbcType=LONGVARCHAR},
+            </if>
+            <if test="bodyText != null">
+                #{bodyText,jdbcType=LONGVARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.zmx.entity.News">
+        update news
+        <set>
+            <if test="titleName != null">
+                TITLE_NAME = #{titleName,jdbcType=VARCHAR},
+            </if>
+            <if test="anId != null">
+                AN_ID = #{anId,jdbcType=INTEGER},
+            </if>
+            <if test="top != null">
+                TOP = #{top,jdbcType=INTEGER},
+            </if>
+            <if test="tread != null">
+                TREAD = #{tread,jdbcType=INTEGER},
+            </if>
+            <if test="time != null">
+                NTIME = #{time,jdbcType=TIMESTAMP},
+            </if>
+            <if test="images != null">
+                IMAGES = #{images,jdbcType=LONGVARCHAR},
+            </if>
+            <if test="bodyText != null">
+                BODY_TEXT = #{bodyText,jdbcType=LONGVARCHAR},
+            </if>
+        </set>
+        where NEWS_ID = #{newsId,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.zmx.entity.News">
+        update news
+        set TITLE_NAME = #{titleName,jdbcType=VARCHAR},
+        AN_ID = #{anId,jdbcType=INTEGER},
+        TOP = #{top,jdbcType=INTEGER},
+        TREAD = #{tread,jdbcType=INTEGER},
+        NTIME = #{time,jdbcType=TIMESTAMP},
+        IMAGES = #{images,jdbcType=LONGVARCHAR},
+        BODY_TEXT = #{bodyText,jdbcType=LONGVARCHAR}
+        where NEWS_ID = #{newsId,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.zmx.entity.News">
+        update news
+        set TITLE_NAME = #{titleName,jdbcType=VARCHAR},
+        AN_ID = #{anId,jdbcType=INTEGER},
+        TOP = #{top,jdbcType=INTEGER},
+        TREAD = #{tread,jdbcType=INTEGER},
+        NTIME = #{time,jdbcType=TIMESTAMP},
+        IMAGES = #{images,jdbcType=LONGVARCHAR}
+        where NEWS_ID = #{newsId,jdbcType=INTEGER}
+    </update>
+
+    <select id="newsList" resultMap="ResultMapWithBLOBs">
+        select
+        <include refid="Base_Column_List" />
+        ,
+        <include refid="Blob_Column_List" />
+        from news
+    </select>
+</mapper>

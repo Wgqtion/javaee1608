@@ -1,0 +1,44 @@
+#u1 {
+    z-index: 2;
+    color: #fff;
+    position: absolute;
+    right: 0;
+    top: 0;
+    margin: 19px 0 5px;
+    padding: 0 96px 0 0;
+}
+#u1 a.mnav, #u1 a.mnav:visited {
+    float: left;
+    color: #333;
+    font-weight: 700;
+    line-height: 24px;
+    margin-left: 20px;
+    font-size: 13px;
+    text-decoration: underline;
+}
+.s_form_wrapper {
+
+    text-align: center;
+}
+body, p, form, ul, li {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.s_form {
+    position: relative;
+    top: 38.2%;
+}
+body {
+    background:#fff URL(http://www.51pptmoban.com/d/file/2016/04/03/ca30dde1105fe09c9c5832999712809e.jpg ) no-repeat left top;
+    background-size:100%;
+}
+.icon_good{
+    background: url('images/good.png') no-repeat center center;
+    background-size:100%;
+}
+.icon_best{
+    background: url(images/best.png) no-repeat center center;
+    background-size:100%;
+}

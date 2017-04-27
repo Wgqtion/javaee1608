@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<!-- 配置相关信息-->
+<configuration>
+    <!-- 加载.properties文件
+     先加载property标签配置的属性……》
+     resource指定的配置文件中的内容……》parameterType里面的内容
+    -->
+    <properties resource="dbinfo.properties">
+    </properties>
+    <!-- 别名 -->
+    <typeAliases>
+        <!--用到com.qf.domain.Book的位置  可以用book替换  -->
+        <!-- <typeAlias type="com.qf.domain.Book" alias="book"/> -->
+        <!-- 批量别名
+       com.qf.domian包下的所有类，都自定义别名，其中别名就是类名（不区分大小写）
+               Book……》Book，book
+        -->
+        <package name="com.zmx.entity"/>
+    </typeAliases>
+    <environments default="devlopment">
+        <environment id="devlopment">
+            <transactionManager type="JDBC"></transactionManager>
+            <dataSource type="POOLED">
+                <!-- 链接数据库的四要素
+                   value:${}:根据key（跟.properties文件的键一一对应）得到值
+                -->
+                <property name="driver" value="${jdbc.driverClass}"/>
+                <property name="url" value="${jdbc.jdbcUrl}"/>
+                <property name="username" value="${jdbc.user}"/>
+                <property name="password" value="${jdbc.password}"/>
+            </dataSource>
+        </environment>
+    </environments>
+    <!-- 配置文件 -->
+    <mappers>
+        <!-- <mapper resource="Book.xml"/> -->
+        <!-- 推荐 -->
+        <package name="com.zmx.mapper"/>
+    </mappers>
+</configuration>

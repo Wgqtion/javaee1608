@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xsi:schemaLocation="
+        http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-4.3.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/mvc
+        http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+
+    <!-- 扫面注解的包 -->
+    <context:component-scan base-package="com.zmx"></context:component-scan>
+    <!-- 配置注解相关的映射器 适配器 -->
+    <mvc:annotation-driven></mvc:annotation-driven>
+    <!--    <mvc:resources mapping="/css/**" location="/css/"/>
+    <mvc:resources mapping="/js/**" location="/js/"/>-->
+    <mvc:resources location="/css/" mapping="/css/**" />
+    <mvc:resources location="/myjs/" mapping="/myjs/**" />
+    <mvc:resources location="/images/" mapping="/images/**" />
+    <mvc:resources location="/layui/" mapping="/layui/**" />
+    <mvc:resources location= "/jquery-easyui-1.5/" mapping="/jquery-easyui-1.5/**"/>
+    <!-- 视图解析器 -->
+    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="suffix" value=".jsp"></property>
+        <property name="prefix" value="/"></property>
+    </bean>
+
+    <!-- 文件上传解析器 -->
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <property name="maxUploadSize" value="10240000"></property><!-- 单位是byte -->
+    </bean>
+
+    <!-- 配置全局的拦截器 -->
+    <mvc:interceptors>
+        <mvc:interceptor>
+            <mvc:mapping path="/**"/>
+            <bean class="com.zmx.intercapt.MyHandlerIntercepter"></bean>
+        </mvc:interceptor>
+    </mvc:interceptors>
+</beans>

@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zmx.mapper.CommentMapper">
+    <resultMap id="BaseResultMap" type="com.zmx.entity.Comment">
+        <id column="NEWS_ID" jdbcType="INTEGER" property="newsId" />
+        <id column="AN_ID" jdbcType="INTEGER" property="anId" />
+        <result column="SUPPORT" jdbcType="INTEGER" property="support" />
+        <result column="TIME" jdbcType="TIMESTAMP" property="time" />
+    </resultMap>
+    <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.zmx.entity.Comment">
+        <result column="C_TEXT" jdbcType="LONGVARCHAR" property="cText" />
+    </resultMap>
+    <sql id="Base_Column_List">
+        NEWS_ID, AN_ID, SUPPORT, TIME
+    </sql>
+    <sql id="Blob_Column_List">
+        C_TEXT
+    </sql>
+    <select id="selectByNewsId" parameterType="com.zmx.entity.Comment" resultMap="ResultMapWithBLOBs">
+        select
+        <include refid="Base_Column_List" />
+        ,
+        <include refid="Blob_Column_List" />
+        from comment
+        where NEWS_ID = #{newsId,jdbcType=INTEGER}
+        AND AN_ID = #{anId,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        delete from comment
+        where NEWS_ID = #{newsId,jdbcType=INTEGER}
+        AND AN_ID = #{anId,jdbcType=INTEGER}
+    </delete>
+    <insert id="insert" parameterType="com.zmx.entity.Comment">
+        insert into comment (NEWS_ID, AN_ID, SUPPORT,
+        TIME, C_TEXT)
+        values (#{newsId,jdbcType=INTEGER}, #{anId,jdbcType=INTEGER}, #{support,jdbcType=INTEGER},
+        #{time,jdbcType=TIMESTAMP}, #{cText,jdbcType=LONGVARCHAR})
+    </insert>
+    <insert id="insertSelective" parameterType="com.zmx.entity.Comment">
+        insert into comment
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="newsId != null">
+                NEWS_ID,
+            </if>
+            <if test="anId != null">
+                AN_ID,
+            </if>
+            <if test="support != null">
+                SUPPORT,
+            </if>
+            <if test="time != null">
+                TIME,
+            </if>
+            <if test="cText != null">
+                C_TEXT,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="newsId != null">
+                #{newsId,jdbcType=INTEGER},
+            </if>
+            <if test="anId != null">
+                #{anId,jdbcType=INTEGER},
+            </if>
+            <if test="support != null">
+                #{support,jdbcType=INTEGER},
+            </if>
+            <if test="time != null">
+                #{time,jdbcType=TIMESTAMP},
+            </if>
+            <if test="cText != null">
+                #{cText,jdbcType=LONGVARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.zmx.entity.Comment">
+        update comment
+        <set>
+            <if test="support != null">
+                SUPPORT = #{support,jdbcType=INTEGER},
+            </if>
+            <if test="time != null">
+                TIME = #{time,jdbcType=TIMESTAMP},
+            </if>
+            <if test="cText != null">
+                C_TEXT = #{cText,jdbcType=LONGVARCHAR},
+            </if>
+        </set>
+        where NEWS_ID = #{newsId,jdbcType=INTEGER}
+        AND AN_ID = #{anId,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.zmx.entity.Comment">
+        update comment
+        set
+        SUPPORT = #{support,jdbcType=INTEGER},
+        TIME = #{time,jdbcType=TIMESTAMP},
+        C_TEXT = #{cText,jdbcType=LONGVARCHAR}
+        where NEWS_ID = #{newsId,jdbcType=INTEGER}
+        AND AN_ID = #{anId,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.zmx.entity.Comment">
+        update comment
+        set
+        SUPPORT = #{support,jdbcType=INTEGER},
+        TIME = #{time,jdbcType=TIMESTAMP}
+        where NEWS_ID = #{newsId,jdbcType=INTEGER}
+        AND AN_ID = #{anId,jdbcType=INTEGER}
+    </update>
+</mapper>

@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zmx.mapper.AccountMapper">
+    <resultMap id="BaseResultMap" type="com.zmx.entity.Account">
+        <id column="AN_ID" jdbcType="INTEGER" property="anId" />
+        <result column="PASSWORD" jdbcType="VARCHAR" property="password" />
+        <result column="NAME" jdbcType="VARCHAR" property="name" />
+        <result column="QQ" jdbcType="VARCHAR" property="qq" />
+        <result column="TEL" jdbcType="VARCHAR" property="tel" />
+        <result column="TIME" jdbcType="TIMESTAMP" property="time" />
+        <result column="IMAGES" jdbcType="LONGVARCHAR" property="images" />
+    </resultMap>
+    <sql id="Base_Column_List">
+        AN_ID, PASSWORD, NAME, QQ, TEL, TIME, IMAGES
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from account
+        where AN_ID = #{anId,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        delete from account
+        where AN_ID = #{anId,jdbcType=INTEGER}
+    </delete>
+    <insert id="insert" parameterType="com.zmx.entity.Account">
+        insert into account (AN_ID, PASSWORD, NAME,
+        QQ, TEL, TIME,IMAGES)
+        values (#{anId,jdbcType=INTEGER}, #{password,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR},
+        #{qq,jdbcType=VARCHAR}, #{tel,jdbcType=VARCHAR}, #{time,jdbcType=TIMESTAMP}),#{images,jdbcType=LONGVARCHAR}
+    </insert>
+    <insert id="insertSelective" parameterType="com.zmx.entity.Account">
+        insert into account
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="anId != null">
+                AN_ID,
+            </if>
+            <if test="password != null">
+                PASSWORD,
+            </if>
+            <if test="name != null">
+                NAME,
+            </if>
+            <if test="qq != null">
+                QQ,
+            </if>
+            <if test="tel != null">
+                TEL,
+            </if>
+            <if test="time != null">
+                TIME,
+            </if>
+            <if test="images != null">
+                IMAGES,
+            </if>
+
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="anId != null">
+                #{anId,jdbcType=INTEGER},
+            </if>
+            <if test="password != null">
+                #{password,jdbcType=VARCHAR},
+            </if>
+            <if test="name != null">
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="qq != null">
+                #{qq,jdbcType=VARCHAR},
+            </if>
+            <if test="tel != null">
+                #{tel,jdbcType=VARCHAR},
+            </if>
+            <if test="time != null">
+                #{time,jdbcType=TIMESTAMP},
+            </if>
+            <if test="images != null">
+                #{images,jdbcType=LONGVARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.zmx.entity.Account">
+        update account
+        <set>
+            <if test="password != null">
+                PASSWORD = #{password,jdbcType=VARCHAR},
+            </if>
+            <if test="name != null">
+                NAME = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="qq != null">
+                QQ = #{qq,jdbcType=VARCHAR},
+            </if>
+            <if test="tel != null">
+                TEL = #{tel,jdbcType=VARCHAR},
+            </if>
+            <if test="time != null">
+                TIME = #{time,jdbcType=TIMESTAMP},
+            </if>
+            <if test="images != null">
+                IMAGES = #{images,jdbcType=LONGVARCHAR},
+            </if>
+        </set>
+        where AN_ID = #{anId,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.zmx.entity.Account">
+        update account
+        set PASSWORD = #{password,jdbcType=VARCHAR},
+        NAME = #{name,jdbcType=VARCHAR},
+        QQ = #{qq,jdbcType=VARCHAR},
+        TEL = #{tel,jdbcType=VARCHAR},
+        TIME = #{time,jdbcType=TIMESTAMP}
+        IMAGES = #{images,jdbcType=LONGVARCHAR}
+        where AN_ID = #{anId,jdbcType=INTEGER}
+    </update>
+    <select id="selectAccount" parameterType="com.zmx.entity.Account" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from account
+        <choose>
+            <when test="qq!=null and qq!=''">
+                where  QQ =  #{qq,jdbcType=VARCHAR}
+            </when>
+            <otherwise>
+                where  TEL = #{tel,jdbcType=VARCHAR}
+                and PASSWORD =  #{password,jdbcType=VARCHAR}
+            </otherwise>
+        </choose>
+    </select>
+</mapper>

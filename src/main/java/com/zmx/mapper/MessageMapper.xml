@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zmx.mapper.MessageMapper">
+    <resultMap id="BaseResultMap" type="com.zmx.entity.Message">
+        <id column="NEWS_ID" jdbcType="INTEGER" property="newsId" />
+        <result column="TITLE_NAME" jdbcType="VARCHAR" property="titleName" />
+        <result column="AN_ID" jdbcType="INTEGER" property="anId" />
+        <result column="TOP" jdbcType="INTEGER" property="top" />
+        <result column="TREAD" jdbcType="INTEGER" property="tread" />
+        <result column="NTIME" jdbcType="TIMESTAMP" property="time" />
+        <result column="BODY_TEXT" jdbcType="LONGVARCHAR" property="bodyText" />
+        <result column="IMAGES" jdbcType="LONGVARCHAR" property="images" />
+        <result column="NNAME" jdbcType="VARCHAR" property="nname" />
+        <collection property="comments" ofType="com.zmx.entity.Comment">
+            <id column="CAN_ID" jdbcType="INTEGER" property="anId" />
+            <id column="NEWS_ID" jdbcType="INTEGER" property="newsId" />
+            <result column="SUPPORT" jdbcType="INTEGER" property="support" />
+            <result column="TIME" jdbcType="TIMESTAMP" property="time" />
+            <result column="C_TEXT" jdbcType="LONGVARCHAR" property="cText" />
+            <result column="CNAME" jdbcType="VARCHAR" property="cname" />
+        </collection>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        NEWS_ID, TITLE_NAME, AN_ID, TOP, TREAD, NTIME , BODY_TEXT, IMAGES, NNAME
+    </sql>
+    <sql id="Blob_Column_List">
+        NEWS_ID, AN_ID, SUPPORT, TIME, C_TEXT, CNAME
+    </sql>
+    <select id="selectMessage" resultMap="BaseResultMap">
+        SELECT   na.`NEWS_ID`,
+        na.`TITLE_NAME`,
+        na.`AN_ID`,
+        na.`TOP`,
+        na.`TREAD`,
+        na.`NTIME`,
+        na.`BODY_TEXT`,
+        na.`IMAGES`,
+        na.`NNAME`,
+        ca.`NEWS_ID`,
+        ca.`AN_ID` As CAN_ID,
+        ca.`SUPPORT`,
+        ca.`TIME`,
+        ca.`C_TEXT`,
+        ca.`CNAME`
+        FROM
+        (
+        SELECT n.*,a.`NAME` AS nname
+        FROM news AS n
+        LEFT JOIN account AS a
+        ON n.`AN_ID`=a.`AN_ID`
+        ) AS na
+
+        LEFT JOIN (
+        SELECT c.*,a.`NAME` AS cname
+        FROM COMMENT AS c
+        LEFT JOIN account AS a
+        ON c.`AN_ID`=a.`AN_ID`
+        ) AS ca
+
+        ON na.`NEWS_ID` = ca.`NEWS_ID`
+        ORDER BY na.`NEWS_ID` DESC
+    </select>
+</mapper>
